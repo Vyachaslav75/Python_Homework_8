@@ -92,4 +92,4 @@ def stud_medal():
                 break
         else:
             medal_list.append(key)
-    v.show_data(f'Медалисты: {", ".join(medal_list)}')
+    v.show_data(f'Медалисты: {", ".join(medal_list)} всего {len(medal_list)} человек.')

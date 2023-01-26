@@ -23,11 +23,14 @@ def new_subj(subj=''):
 
 
 def new_mark(stud_name='', subj='', mark=0):
-    if stud_name == '' or subj == '' or mark == 0:
-        stud_name = ' '.join(v.input_data(['Фамилия', 'Имя']))
-        subj = v.input_data(['Предмет'])[0]
-        mark = int(v.input_data([f'{stud_name} оценку по {subj}'])[0])
-    c.students[stud_name][subj].append(mark)
+    try:
+        if stud_name == '' or subj == '' or mark == 0:
+            stud_name = ' '.join(v.input_data(['Фамилия', 'Имя']))
+            subj = v.input_data(['Предмет'])[0]
+            mark = int(v.input_data([f'{stud_name} оценку по {subj}'])[0])
+        c.students[stud_name][subj].append(mark)
+    except:
+        v.show_data('Неверный ввод')
 
 
 def show_students():
@@ -37,9 +40,12 @@ def show_students():
 
 def show_marks():
     stud = ' '.join(v.input_data(['Фамилия', 'Имя']))
-    for key in c.students[stud]:
-        v.show_data(
-            f'{key}, оценки: {", ".join([str(x) for x in c.students[stud][key]])}')
+    try:
+        for key in c.students[stud]:
+            v.show_data(
+                f'{key}, оценки: {", ".join([str(x) for x in c.students[stud][key]])}')
+    except:
+        v.show_data('Неверный ввод')
 
 
 def calc_mid(data):
@@ -51,16 +57,22 @@ def calc_mid(data):
 def stud_mid_subj():
     stud = ' '.join(v.input_data(['Фамилия', 'Имя']))
     subj = v.input_data(['Предмет'])[0]
-    mid = calc_mid(c.students[stud][subj])
-    v.show_data(f'{subj}, средний балл= {mid}')
+    try:
+        mid = calc_mid(c.students[stud][subj])
+        v.show_data(f'{subj}, средний балл= {mid}')
+    except:
+        v.show_data('Неверный ввод')
 
 
 def school_mid_subj():
     subj = v.input_data(['Предмет'])[0]
     mid = 0
-    for key in c.students:
-        mid += calc_mid(c.students[key][subj])
-    v.show_data(f'{subj}, средний балл по школе {mid/len(c.students)}')
+    try:
+        for key in c.students:
+            mid += calc_mid(c.students[key][subj])
+        v.show_data(f'{subj}, средний балл по школе {mid/len(c.students)}')
+    except:
+        v.show_data('Неверный ввод')
 
 
 def check_mark(data):
